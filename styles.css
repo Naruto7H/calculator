@@ -1,0 +1,88 @@
+body {
+  background-color: #3B3C36;
+  min-width: 100vh;
+}
+
+/* BACKGROUND SYMBOLS */
+
+.symbols {
+  color: #555D50;
+  font-size: 10.5rem;
+  z-index: -1;
+}
+
+.minus {
+  position: absolute;
+  top: 10%;
+  left: 24%;
+}
+
+.plus {
+  position: absolute;
+  top: 9%;
+  right: 22%;
+}
+
+.divide {
+  position: absolute;
+  bottom: 28%;
+  left: 20%;
+}
+
+.equal {
+  position: absolute;
+  bottom: 8px;
+  left: 5%;
+}
+
+.multiply {
+  position: absolute;
+  bottom: 23%;
+  right: 14%;
+}
+
+/* CALCULATOR BODY */
+
+.cal-body{
+  min-height:88vh;
+  width: 28%;
+  min-width: 458px;
+  background-color: black;
+  margin: 2.2% auto auto;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  padding: 0.1%;
+  box-shadow: 8px 7px 15px 15px rgba(0, 0, 0, 0.4), 6px 7px 15px 25px rgba(0, 0, 0, 0.29);
+}
+.screen{
+  background-color: white;
+  width:100%;
+  height:180px;
+}
+
+.input-field{
+  width:100%;
+  flex-grow: 1;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%;
+  grid-row-gap: 0;
+  grid-auto-rows: 1fr;
+}
+
+.buttons{
+  background-color:#343434;
+  border: 1px inset gray;
+  box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 12px;
+  font-size: 2rem;
+  color: #FAF9F6;
+  text-align: center;
+  padding-top: 20%;
+  font-family:monospace;
+}
+.op{
+  background-color:#8A2BE2;
+}
+.eq{
+  background-color: #ffd700;
+}
