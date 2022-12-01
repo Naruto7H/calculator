@@ -4,7 +4,6 @@ body {
 }
 
 /* BACKGROUND SYMBOLS */
-
 .symbols {
   color: #555D50;
   font-size: 10.5rem;
@@ -42,9 +41,8 @@ body {
 }
 
 /* CALCULATOR BODY */
-
-.cal-body{
-  min-height:88vh;
+.cal-body {
+  min-height: 88vh;
   width: 28%;
   min-width: 458px;
   background-color: black;
@@ -55,14 +53,32 @@ body {
   padding: 0.1%;
   box-shadow: 8px 7px 15px 15px rgba(0, 0, 0, 0.4), 6px 7px 15px 25px rgba(0, 0, 0, 0.29);
 }
-.screen{
+
+.screen {
   background-color: white;
-  width:100%;
-  height:180px;
+  width: 100%;
+  height: 180px;
 }
 
-.input-field{
-  width:100%;
+.num {
+  border: none;
+  text-align: right;
+  width: 98%;
+  height: 80px;
+  font-size: 2rem;
+}
+
+textarea:focus, input:focus {
+  outline: none;
+}
+
+.output {
+  font-size: 3.5rem;
+  font-family: monospace;
+}
+
+.input-field {
+  width: 100%;
   flex-grow: 1;
   display: grid;
   grid-template-columns: 25% 25% 25% 25%;
@@ -70,19 +86,33 @@ body {
   grid-auto-rows: 1fr;
 }
 
-.buttons{
-  background-color:#343434;
+.buttons {
+  background-color: #343434;
   border: 1px inset gray;
   box-shadow: rgba(0, 0, 0, 0.5) 0px 4px 12px;
   font-size: 2rem;
   color: #FAF9F6;
   text-align: center;
   padding-top: 20%;
-  font-family:monospace;
+  font-family: monospace;
 }
-.op{
-  background-color:#8A2BE2;
+
+.buttons:hover {
+  background-color: rgb(53, 54, 56);
 }
-.eq{
+
+.op {
+  background-color: #8A2BE2;
+}
+
+.op:hover {
+  background-color: rgb(141, 47, 229);
+}
+
+.eq {
   background-color: #ffd700;
+}
+
+.eq:hover {
+  background-color: rgb(259, 219, 3);
 }
