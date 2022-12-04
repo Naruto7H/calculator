@@ -2,48 +2,55 @@ const displayScreen = document.querySelector('.output');
 const inputField = document.querySelector('.input-field');
 const allButtons = document.querySelectorAll('.buttons');
 const equalButton = document.querySelectorAll('.eq');
+const input = document.querySelector(".num");
 allButtons.forEach(btn => btn.addEventListener('click', getResult));
 let final;
 let trash = [];
-let impVal = [];
+let expr = [];
 let isLastInputOperator = false;
 let lastIndex = 0;
 let isLastPoint = false;
 function getResult(e) {
     const ele = e.target.innerText;
+    console.log(expr);
     // Push element in array if its a number
     if (!(/[-=x+%÷C]/).test(ele) && (/[0-9]/).test(ele)) {
-        !(/[0-9]/).test(impVal[lastIndex]) ? impVal.push(ele) : impVal[lastIndex] += ele;
+        !(/[0-9]/).test(expr[lastIndex]) ? expr.push(ele) : expr[lastIndex] += ele;
         isLastInputOperator = false;
+        calculate(expr);
     }
     if (ele === "del") {
-        if (impVal[lastIndex].length === 1) {
-            impVal.splice(-1, 1);
+        if (expr[lastIndex].length === 1) {
+            expr.splice(-1, 1);
             lastIndex -= 1;
             isLastInputOperator = !isLastInputOperator;
+            console.log("deleted");
         }
         else {
-            impVal[lastIndex] = impVal[lastIndex].slice(0, -1);
+            expr[lastIndex] = expr[lastIndex].slice(0, -1);
         }
     }
-    if ((/./).test(ele) && !isLastPoint && !impVal[lastIndex] === undefined) {
-        impVal[lastIndex] += ele;
+    if ((/./).test(ele) && !isLastPoint && !expr[lastIndex] === undefined) {
+        expr[lastIndex] += ele;
         isLastPoint = true;
         console.log('haha');
     }
     // if the pressed button is an operator btn then push it into the array
     // if there is already an operator in arr then pop it and push new one
     if ((/[-x+%÷]/).test(ele) && !(/\//).test(ele)) {
-        isLastInputOperator === true ? impVal.pop() : lastIndex += 2;
-        if (impVal[0]) {
-            impVal.push(ele);
+        isLastInputOperator === true ? expr.pop() : lastIndex += 2;
+        if (expr[0]) {
+            expr.push(ele);
             isLastInputOperator = true;
         }
     }
-    if ((/\//).test(ele))
-        impVal[lastIndex] = `${parseFloat(impVal[lastIndex]) * -1}`;
+    if ((/\//).test(ele)) {
+        expr[lastIndex] = `${parseFloat(expr[lastIndex]) * -1}`;
+        calculate(expr);
+    }
     if ((/=/).test(ele) && !isLastInputOperator)
-        calculate(impVal);
+        calculate(expr);
+    input.value = expr.join("");
 }
 function calculate(arr) {
     let pr0 = arr.slice();
@@ -56,7 +63,7 @@ function calculate(arr) {
     let pr2 = pr1.map((i, ind) => !(/[0-9]/).test(i) ? evaluateP1(i, ind, pr1) : i);
     displayScreen.innerText = pr2[pr2.length - 1];
     trash = [];
-    console.log(arr, "arr");
+    console.log(expr, "expr");
     console.log(pr1, "pr1");
     console.log(pr2, "pr2");
 }
