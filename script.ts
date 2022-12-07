@@ -9,7 +9,7 @@ allButtons.forEach(btn => btn.addEventListener('click', getResult));
 
 
 let final: string;
-let trash: number[] = [];
+let garbage: number[] = [];
 let expr: string[] = []
 let isLastInputOperator = false;
 let lastIndex = 0;
@@ -21,26 +21,19 @@ function getResult(e: any) {
     console.log(expr);
 
     // Push element in array if its a number
-    if (!(/[-=x+%÷C]/).test(ele) && (/[0-9]/).test(ele)) {
+    if ((/[0-9]/).test(ele)) {
         !(/[0-9]/).test(expr[lastIndex]) ? expr.push(ele) : expr[lastIndex] += ele
         isLastInputOperator = false;
         calculate(expr)
     }
-    if (ele === "del") {
-        if (expr[lastIndex].length === 1) {
-            expr.splice(-1, 1);
-            lastIndex -= 1;
-            isLastInputOperator = !isLastInputOperator;
-            console.log("deleted");
-
-        } else {
-            expr[lastIndex] = expr[lastIndex].slice(0, -1);
-        }
+    if (ele === "C") {
+        expr = []
+        lastIndex = 0;
     }
-    if ((/./).test(ele) && !isLastPoint && !expr[lastIndex] === undefined) {
-        expr[lastIndex] += ele;
+    del(ele)
+    if (ele === "." && !isLastPoint) {
+        expr[lastIndex] ? expr.push(ele) : expr[lastIndex] += ele
         isLastPoint = true;
-        console.log('haha');
     }
 
     // if the pressed button is an operator btn then push it into the array
@@ -50,31 +43,46 @@ function getResult(e: any) {
         if (expr[0]) {
             expr.push(ele)
             isLastInputOperator = true;
+            isLastPoint = false;
         }
     }
 
-    if ((/\//).test(ele)) {
+    if ((/\//).test(ele) && !isLastInputOperator ) {
         expr[lastIndex] = `${parseFloat(expr[lastIndex]) * -1}`
         calculate(expr)
     }
-    if ((/=/).test(ele) && !isLastInputOperator) calculate(expr)
+    if (ele === "=" && !isLastInputOperator) calculate(expr)
     input.value = expr.join("")
+}
+
+function  del(ele: string) {
+    if (ele === "del" && expr[0]) {
+        if (expr[lastIndex].length === 1) {
+            expr.splice(-1, 1);
+            lastIndex -= 1;
+            isLastInputOperator = !isLastInputOperator;
+        } else {
+            expr[lastIndex] = expr[lastIndex].slice(0, -1);
+            console.log(expr[lastIndex].slice(0, -1));
+            
+            calculate(expr)
+        }
+    }
 }
 
 function calculate(arr: string[]) {
     let pr0 = arr.slice()
     let pr1 = pr0.map((i, ind) => i = (/[x%÷]/).test(i) ? evaluateP0(i, ind, pr0) : i)
-    trash.reverse().forEach(t => pr1.splice(t, 1));
+    garbage.reverse().forEach(t => pr1.splice(t, 1));
     // cant use regexp here because if value it negative it will evaluate
     // the (/[-+]/).text(ele) as true because there is a negative there
     // result2 = result.map((i, ind) => !(/0-9/).test(i) ? evaluateP1(i, ind) : i);
     // OR
     let pr2 = pr1.map((i, ind) => !(/[0-9]/).test(i) ? evaluateP1(i, ind, pr1) : i);
     displayScreen.innerText = pr2[pr2.length - 1];
-    trash = []
-    console.log(expr, "expr");
-    console.log(pr1, "pr1");
-    console.log(pr2, "pr2");
+    if (!expr[0]) displayScreen.innerText = '0';
+    console.log(pr2[pr2.length - 1, "p-1"]);
+    garbage = []
 }
 
 function evaluateP0(i: string, ind: number, arr: string[]) {
@@ -84,8 +92,8 @@ function evaluateP0(i: string, ind: number, arr: string[]) {
     if (i === "÷") returnVal = `${(a / b).toFixed(5)}`
     if (i === "%") returnVal = `${a % b}`
     arr[ind + 1] = returnVal
-    trash.push(ind - 1)
-    trash.push(ind)
+    garbage.push(ind - 1)
+    garbage.push(ind)
     return returnVal;
 }
 
